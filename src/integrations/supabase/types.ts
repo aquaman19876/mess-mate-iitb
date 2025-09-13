@@ -14,7 +14,110 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      food_items: {
+        Row: {
+          added_by_user_id: string
+          created_at: string
+          date_served: string
+          day_type: Database["public"]["Enums"]["day_type"]
+          description: string | null
+          id: string
+          meal_slot: Database["public"]["Enums"]["meal_slot"]
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          added_by_user_id: string
+          created_at?: string
+          date_served: string
+          day_type: Database["public"]["Enums"]["day_type"]
+          description?: string | null
+          id?: string
+          meal_slot: Database["public"]["Enums"]["meal_slot"]
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          added_by_user_id?: string
+          created_at?: string
+          date_served?: string
+          day_type?: Database["public"]["Enums"]["day_type"]
+          description?: string | null
+          id?: string
+          meal_slot?: Database["public"]["Enums"]["meal_slot"]
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          roll_number: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          roll_number?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          roll_number?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          food_item_id: string
+          id: string
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          food_item_id: string
+          id?: string
+          rating: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          food_item_id?: string
+          id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_food_item_id_fkey"
+            columns: ["food_item_id"]
+            isOneToOne: false
+            referencedRelation: "food_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +126,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      day_type: "weekday" | "weekend"
+      meal_slot: "breakfast" | "lunch" | "evening_snacks" | "dinner"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +254,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      day_type: ["weekday", "weekend"],
+      meal_slot: ["breakfast", "lunch", "evening_snacks", "dinner"],
+    },
   },
 } as const
